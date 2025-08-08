@@ -18,7 +18,7 @@ app.use(express.urlencoded({ extended: true })); // Parses form data
 
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://full-stack-eat5.vercel.app/"
+  "https://veil-verse-hackathon.vercel.app/"
 ];
 app.use(cors({
   origin: (origin, callback) => {
