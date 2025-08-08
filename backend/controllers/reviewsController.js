@@ -37,6 +37,7 @@ export async function createReviewHandler(req, res) {
     res.status(201).json({
       message: "Review added successfully",
       review: hijab.reviews[hijab.reviews.length - 1],
+      status:true
     });
   } catch (error) {
     if (error instanceof mongoose.Error.CastError) {
@@ -60,7 +61,7 @@ export const getAllReviewsHandler = async (req, res) => {
     }
 
     if (hijab.reviews.length === 0) {
-      return res.status(200).json({ message: "No reviews found", reviews: [] });
+      return res.status(200).json({ message: "No reviews found", reviews: [],success:true });
     }
 
     res.status(200).json(hijab.reviews);
