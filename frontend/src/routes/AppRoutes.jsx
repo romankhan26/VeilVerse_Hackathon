@@ -1,0 +1,78 @@
+import { createBrowserRouter } from "react-router-dom";
+import MainLayout from "../layout/MainLayout";
+import Home from "../pages/Home";
+import About from "../pages/About";
+import ProtectedRoutes from "./ProtectedRoutes";
+import AccountSettings from "../pages/AccountSettings";
+import Dashboard from "../pages/Dashboard";
+import AdminPanel from "../pages/AdminPanel";
+import Login from "../pages/Login";
+import SignUp from "../pages/Signup";
+import ForgotPassword from "../pages/ForgotPassword";
+import EditProfile from "../pages/EditProfile";
+import ResetPassword from "../pages/ResetPassword";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <MainLayout />,
+    children: [
+      {
+        index: true,
+        element: <Home />,
+      },
+      {
+        path: "about",
+        element: <About />,
+      },
+      // Auth routes
+   
+      // Protected dashboard routes
+      {
+        path: "dashboard",
+        element: (
+          <ProtectedRoutes>
+            <MainLayout /> {/* Use MainLayout here */}
+          </ProtectedRoutes>
+        ),
+        children: [
+          {
+            index: true,
+            element: <Dashboard />,
+          },
+          {
+            path: "account-settings",
+            element: <AccountSettings />,
+          },
+         
+        ,{
+            path: "update-profile",
+            element: <EditProfile />,
+          },
+        ],
+      },
+
+      // Admin routes
+      {
+        path: "admin",
+        element: (
+          <ProtectedRoutes role="admin">
+            <MainLayout /> {/* Use MainLayout here */}
+          </ProtectedRoutes>
+        ),
+        children: [
+          {
+            index: true,
+            element: <AdminPanel />,
+          },
+        ],
+      },
+    ],
+  },
+     { path: "login", element: <Login /> },
+      { path: "signup", element: <SignUp /> },
+      { path: "reset-password", element: <ResetPassword /> },
+      { path: "forgot-password", element: <ForgotPassword /> },
+      
+]);
+export default router
