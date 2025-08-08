@@ -1,14 +1,27 @@
 import mongoose from "mongoose";
 
-const dbConnection = () => {
-    // console.log('🔍 MONGO_URI:', process.env.MONGODB_URI); // Debug log
+let isConnected = false;
 
-  return mongoose.connect(process.env.MONGODB_URI)
+const dbConnection = async () => {
+  if (isConnected) {
+    console.log("✅ Using existing MongoDB connection");
+    return;
+  }
 
-    .then(() => { console.log("DB connected successfully"); })
+  try {
+    const conn = await mongoose.connect(process.env.MONGODB_URI, {
+      dbName: "ecomdb",
+      // Optional: newer connection tuning
+      maxPoolSize: 10, // controls connection pool size
+      serverSelectionTimeoutMS: 5000, // fail fast if DB down
+    });
 
-    .catch((err) => { console.log("ERROR in DB CONNECTION : ", err); })
+    isConnected = conn.connections[0].readyState === 1;
+    console.log(`✅ DB connected: ${conn.connection.host}`);
+  } catch (err) {
+    console.error("❌ ERROR in DB CONNECTION:", err.message);
+    throw err;
+  }
+};
 
-}
-
-export default dbConnection
+export default dbConnection;
