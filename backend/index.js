@@ -7,13 +7,12 @@ import dbConnectMiddleware from './middlewares/dbConnectMiddleware.js';
 dotenv.config();
 
 const app = express();
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 
 const allowedOrigins = [
   "http://localhost:5173",
-  "https://veil-verse-hackathon.vercel.app"
+  "https://veil-verse-hackathon.vercel.app" // ✅ no slash
 ];
+
 app.use(cors({
   origin: (origin, callback) => {
     if (!origin || allowedOrigins.includes(origin)) {
@@ -24,6 +23,10 @@ app.use(cors({
   },
   credentials: true
 }));
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 // app.use(dbConnectMiddleware);
 app.use("/api", dbConnectMiddleware);
 
