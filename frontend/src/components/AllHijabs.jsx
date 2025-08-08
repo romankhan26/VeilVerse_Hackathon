@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -14,19 +14,19 @@ import { postRequest, putRequest, deleteRequest } from "../utils/apiClients";
 import { toast } from "react-toastify";
 import useSWR from "swr";
 
-const AllHijabs = () => {
+const AllHijabs = (e) => {
   const [expandedHijab, setExpandedHijab] = useState(null);
   const [reviewText, setReviewText] = useState("");
   const [rating, setRating] = useState(5);
   const [submittingReview, setSubmittingReview] = useState(false);
   const [editingReview, setEditingReview] = useState(null);
+  const [hijabs, setHijabs] = useState([]);
   const { user } = useCurrentUser();
   const navigate = useNavigate();
-  console.log(user)
 
   // SWR hook for fetching hijabs
   const {
-    data: hijabs,
+    data,
     error,
     mutate: mutateHijabs,
   } = useSWR(
@@ -40,7 +40,12 @@ const AllHijabs = () => {
     },
     { revalidateOnFocus: false }
   );
-
+  //manually setting hijabs
+  useEffect(() => {
+    if (data) {
+      setHijabs(data);
+    }
+  }, [data]);
   const toggleExpand = (id) => {
     setExpandedHijab(expandedHijab === id ? null : id);
     setReviewText("");
@@ -48,57 +53,112 @@ const AllHijabs = () => {
     setEditingReview(null);
   };
 
-  const handleReviewSubmit = async (hijabId) => {
+  //////////////////function to add reviews
+  const addReview = async (hijabId) => {
     if (!user) {
       toast.error("Please login to submit a review");
       navigate("/login");
-      return;
+      return false;
     }
-
     if (!reviewText.trim()) {
       toast.error("Please enter your review");
-      return;
+      return false;
     }
-
     setSubmittingReview(true);
 
     try {
-      let response;
-      if (editingReview) {
-        response = await putRequest(
-          `${import.meta.env.VITE_BACKEND_URL}/hijabs/${hijabId}/reviews/${
-            editingReview._id
-          }`,
-          { description: reviewText, rating }
-        );
-      } else {
-        response = await postRequest(
-          `${import.meta.env.VITE_BACKEND_URL}/hijabs/${hijabId}/reviews`,
-          { description: reviewText, rating, user: user.user }
-        );
-      }
+      const response = await postRequest(
+        `${import.meta.env.VITE_BACKEND_URL}/hijabs/${hijabId}/reviews`,
+        { description: reviewText, rating, user: user.user }
+      );
 
       if (response.success) {
-        toast.success(
-          `Review ${editingReview ? "updated" : "submitted"} successfully`
+        // Assume response.review is the newly created review object
+        setHijabs((prevHijabs) =>
+          prevHijabs.map((h) =>
+            h._id === hijabId
+              ? { ...h, reviews: [...h.reviews, response.review] }
+              : h
+          )
         );
-        mutateHijabs(); // Revalidate the data
+        toast.success("Review submitted successfully");
+        mutateHijabs(); // Revalidate
+        setReviewText("");
+        setRating(5);
+        return true;
+      } else {
+        toast.error(response.message || "Failed to submit review");
+        return false;
+      }
+    } catch (error) {
+      toast.error(error.response?.data?.message || "Failed to submit review");
+      return false;
+    } finally {
+      setSubmittingReview(false);
+    }
+  };
+  ////////////function to edit the review
+  const editReview = async (hijabId) => {
+    if (!user) {
+      toast.error("Please login to edit your review");
+      navigate("/login");
+      return false;
+    }
+    if (!reviewText.trim()) {
+      toast.error("Please enter your review");
+      return false;
+    }
+    setSubmittingReview(true);
+
+    try {
+      const response = await putRequest(
+        `${import.meta.env.VITE_BACKEND_URL}/hijabs/${hijabId}/reviews/${
+          editingReview._id
+        }`,
+        { description: reviewText, rating }
+      );
+      console.log(response, "updating review");
+      console.log(hijabs, "HIjabs");
+
+      if (response.success) {
+        // Update review in local state by replacing matching review
+        setHijabs((prevHijabs) =>
+          prevHijabs.map((h) =>
+            h._id === hijabId
+              ? {
+                  ...h,
+                  reviews: h.reviews.map((r) =>
+                    r._id === editingReview._id
+                      ? { ...r, ...response.review }
+                      : r
+                  ),
+                }
+              : h
+          )
+        );
+        toast.success("Review updated successfully");
+        mutateHijabs(); // Revalidate
         setReviewText("");
         setRating(5);
         setEditingReview(null);
+        return true;
       } else {
-        toast.error(
-          response.message ||
-            `Failed to ${editingReview ? "update" : "submit"} review`
-        );
+        toast.error(response.message || "Failed to update review");
+        return false;
       }
     } catch (error) {
-      toast.error(
-        error.response?.data?.message ||
-          `Failed to ${editingReview ? "update" : "submit"} review`
-      );
+      toast.error(error.response?.data?.message || "Failed to update review");
+      return false;
     } finally {
       setSubmittingReview(false);
+    }
+  };
+  /////////submit handler
+  const handleReviewSubmit = async (hijabId) => {
+    if (editingReview) {
+      await editReview(hijabId);
+    } else {
+      await addReview(hijabId);
     }
   };
 
@@ -115,7 +175,8 @@ const AllHijabs = () => {
       const response = await deleteRequest(
         `${
           import.meta.env.VITE_BACKEND_URL
-        }/hijabs/${hijabId}/reviews/${reviewId}`,{user:user.user}
+        }/hijabs/${hijabId}/reviews/${reviewId}`,
+        { user: user.user }
       );
 
       if (response.success) {
@@ -127,6 +188,19 @@ const AllHijabs = () => {
     } catch (error) {
       toast.error(error.response?.data?.message || "Failed to delete review");
     }
+
+    //     if (response.success) {
+    //   setHijabs((prevHijabs) =>
+    //     prevHijabs.map((h) =>
+    //       h._id === hijabId
+    //         ? { ...h, reviews: h.reviews.filter((r) => r._id !== reviewId) }
+    //         : h
+    //     )
+    //   );
+
+    //   toast.success("Review deleted successfully");
+    //   mutateHijabs();
+    // }
   };
 
   const renderStars = (num) => {

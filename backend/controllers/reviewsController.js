@@ -63,7 +63,7 @@ export const getAllReviewsHandler = async (req, res) => {
       return res.status(200).json({ message: "No reviews found", reviews: [] });
     }
 
-    res.json(hijab.reviews);
+    res.status(200).json(hijab.reviews);
   } catch (error) {
     if (error instanceof mongoose.Error.CastError) {
       return res.status(400).json({ message: "Invalid ID format" });
@@ -106,14 +106,14 @@ export const updateReviewHandler = async (req, res) => {
 
     await hijab.save();
 
-    res.json({ message: "Review updated successfully", review });
+    res.status(201).json({ message: "Review updated successfully", review,success:true });
   } catch (error) {
     if (error instanceof mongoose.Error.CastError) {
       return res.status(400).json({ message: "Invalid ID format" });
     }
     res
       .status(500)
-      .json({ message: "Error updating review", error: error.message });
+      .json({ message: "Error updating review", error: error.message, success:true });
   }
 };
 
@@ -134,7 +134,7 @@ export const deleteReviewHandler = async (req, res) => {
     review.deleteOne(); // ⬅ fix here
     await hijab.save();
 
-    res.json({ message: "Review deleted successfully" });
+    res.status(201).json({ message: "Review deleted successfully", success:true });
   } catch (err) {
     res.status(500).json({ message: "Error deleting review", error: err.message });
   }

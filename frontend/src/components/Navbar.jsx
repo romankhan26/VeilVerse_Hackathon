@@ -18,16 +18,18 @@ import { getUser, removeToken, removeUser } from "../utils/auth";
 import { toast } from "react-toastify";
 import { useCurrentUser } from "../hooks/useCurrentUser";
 import { FaScrewdriverWrench } from "react-icons/fa6";
+import { MdExplore } from "react-icons/md";
 
 const navlinks = [
   { name: "Home", path: "/", icon: <GoHomeFill /> },
   { name: "About", path: "/about", icon: <IoMdInformationCircle /> },
-  { name: "Questions Forum", path: "/questions-forum", icon: <FaComments /> },
-  {
-    name: "Feedback Forum",
-    path: "/feedback-forum",
-    icon: <SiAnswer className="text-[22px] pl-1" />,
-  },
+  {name:"Explore Hijab Styles", path:"/hijab-styles", icon:<MdExplore/>},
+  // { name: "Questions Forum", path: "/questions-forum", icon: <FaComments /> },
+  // {
+  //   name: "Feedback Forum",
+  //   path: "/feedback-forum",
+  //   icon: <SiAnswer className="text-[22px] pl-1" />,
+  // },
   {
     name: "Notifications",
     path: "/notifications",
@@ -72,7 +74,6 @@ const user =getUser()
     toast.info("You've been logged out");
   };
 
-  console.log(user,"Navbar")
   return (
     <>
       {/* Mobile Hamburger Button (only on mobile) */}
@@ -100,10 +101,10 @@ const user =getUser()
           {/* Logo */}
           <div className="px-4 mb-8">
             <motion.h1
-              className="text-xl font-bold truncate"
+              className="text-xl font-bold truncate flex justify-start items-center"
               animate={{ opacity: isHovered ? 1 : 0 }}
             >
-              VeilVerse
+             <img src="eada5ddc-f86f-4071-a8f6-76f3ec768be0_removalai_preview.png" width={50} height={50} alt="" /> VeilVerse
             </motion.h1>
           </div>
 
