@@ -88,11 +88,39 @@ export const forgotPswdHandler = async (req, res) => {
       to: user.email,
       subject: "Reset Password",
       html: `
-         <div style="margin: 0 auto; width: 90%; height: 500px;">
-          <h1 style="color: gold;" >Reset Password</h1>
-          <p style="color: gray;">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aliquam maxime vero libero.</p>
-          <p>Click here to reset <a href="${resetURL}">Reset </a></p>
-        </div>
+       
+<body style="margin:0; padding:0; font-family: Arial, sans-serif; background-color:#e6f2f1;">
+  <div style="max-width:600px; margin:40px auto; background:#ffffff; padding:40px; border-radius:8px; box-shadow:0 2px 8px rgba(0,0,0,0.1); text-align:center; height: 500px;">
+    <h1 style="color: #004d40; font-size: 32px; margin-bottom: 20px;">Reset Password</h1>
+    <p style="color: #00332f; font-size: 16px; line-height: 1.5; margin-bottom: 40px;">
+      You requested to reset your password. Click the button below to proceed.
+    </p>
+    <a 
+      href="${resetURL}" 
+      style="
+        display: inline-block;
+        background-color: #004d40;
+        color: #ffffff;
+        text-decoration: none;
+        padding: 15px 40px;
+        font-size: 18px;
+        border-radius: 6px;
+        font-weight: bold;
+        box-shadow: 0 4px 8px rgba(0, 77, 64, 0.4);
+        transition: background-color 0.3s ease;
+      "
+      onmouseover="this.style.backgroundColor='#00332f'"
+      onmouseout="this.style.backgroundColor='#004d40'"
+    >
+      Reset Password
+    </a>
+    <p style="margin-top: 50px; color: #666666; font-size: 14px;">
+      If you did not request a password reset, you can safely ignore this email.
+    </p>
+  </div>
+</body>
+
+
         `
     })
 

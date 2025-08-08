@@ -15,7 +15,7 @@ const transporter = nodemailer.createTransport({
 
 await transporter.sendMail(
   {
-    from: `ECOM <${process.env.EMAIL_NODEMAILER}>`,
+    from: `VeilVerse <${process.env.EMAIL_NODEMAILER}>`,
     ...body
   }
 )
