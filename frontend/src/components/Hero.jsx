@@ -21,7 +21,7 @@ const Hero = () => {
         <div className="flex justify-center md:justify-start space-x-6">
    <p className="p-0.5 rounded-md bg-gradient-to-r from-teal-600 to-teal-800 inline-block">
   <NavLink
-    href="/hijab-styles"
+    to="/hijab-styles"
     className="block rounded-md border-transparent bg-white px-6 py-3 font-semibold transition
       hover:border-transparent text-black
       hover:bg-gradient-to-r hover:from-teal-600 hover:to-teal-800
