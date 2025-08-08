@@ -239,9 +239,7 @@ const AllHijabs = (e) => {
         transition={{ duration: 0.5 }}
         className="max-w-7xl mx-auto"
       >
-        <h1 className="text-3xl md:text-4xl text-center text-transparent bg-gradient-to-tr from-teal-300 to-teal-950 bg-clip-text font-bold mb-8">
-          Hijab Styles Collection
-        </h1>
+        
 
         <div className="grid grid-cols-1 gap-6">
           {hijabs.map((hijab) => (

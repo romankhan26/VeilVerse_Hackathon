@@ -11,6 +11,8 @@ import SignUp from "../pages/Signup";
 import ForgotPassword from "../pages/ForgotPassword";
 import EditProfile from "../pages/EditProfile";
 import ResetPassword from "../pages/ResetPassword";
+import NotFound from "../components/NotFound";
+import ExploreStyles from "../pages/ExploreStyles";
 
 const router = createBrowserRouter([
   {
@@ -22,8 +24,16 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
+        path: "*",
+        element: <NotFound />,
+      },
+      {
         path: "about",
         element: <About />,
+      },
+       {
+        path: "hijab-styles",
+        element: <ExploreStyles />,
       },
       // Auth routes
    

@@ -1,6 +1,7 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 const MainLayout = () => {
   return (
@@ -14,6 +15,9 @@ const MainLayout = () => {
           <Outlet />
         </div>
       </main>
+    <footer className=" text-white bg-teal-800  md:ml-20 box-border -mb-10">
+  <Footer/>
+</footer>
     </div>
   );
 };
