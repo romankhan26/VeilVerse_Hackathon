@@ -37,7 +37,7 @@ export async function createReviewHandler(req, res) {
     res.status(201).json({
       message: "Review added successfully",
       review: hijab.reviews[hijab.reviews.length - 1],
-      status:true
+      success:true
     });
   } catch (error) {
     if (error instanceof mongoose.Error.CastError) {
