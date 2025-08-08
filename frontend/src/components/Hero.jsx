@@ -12,7 +12,7 @@ const Hero = () => {
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.8 }}
       >
-        <h1 className="text-4xl md:text-6xl font-extrabold mb-6 pb-2 bg-gradient-to-r from-teal-600 to-teal-800 bg-clip-text text-transparent">
+        <h1 className="text-4xl md:text-6xl font-extrabold mb-6 mt-12 md:mt-0 pb-2 bg-gradient-to-r from-teal-600 to-teal-800 bg-clip-text text-transparent">
           Discover the Art of Elegant Hijab Styling
         </h1>
         <p className="text-lg md:text-xl mb-10">

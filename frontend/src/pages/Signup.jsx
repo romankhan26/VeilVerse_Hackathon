@@ -1,15 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { postRequest } from "../utils/apiClients";
 import { ImSpinner3 } from "react-icons/im";
 import { getUser, setToken, setUser } from "../utils/auth";
 import { LuEye, LuEyeClosed } from "react-icons/lu";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { IoArrowBack } from "react-icons/io5";
 
 const SignUp = () => {
   const navigate = useNavigate();
+  
+  const location = useLocation();
   const [loading, setLoading] = useState(false);
   const [showPassword1, setShowPassword1] = useState(false);
   const [showPassword2, setShowPassword2] = useState(false);
@@ -91,8 +94,15 @@ const SignUp = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, ease: "easeOut" }}
-        className="w-full max-w-md p-8 space-y-6 bg-white rounded-2xl shadow-xl"
+        className="w-full max-w-md p-8 space-y-6 relative bg-white rounded-2xl shadow-xl"
       >
+           <button
+                          onClick={() => navigate(location.state?.from || "/")}
+                          className="absolute top-4 left-4 text-gray-600 hover:text-teal-700 transition-colors"
+                          disabled={loading}
+                        >
+                          <IoArrowBack className="text-xl" />
+                        </button>
         <h1 className="text-3xl text-center text-transparent bg-gradient-to-tr from-teal-300 to-teal-950 bg-clip-text uppercase font-bold">
           SIGN UP
         </h1>

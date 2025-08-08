@@ -53,7 +53,7 @@ const AccountSettings = () => {
   const handleLogout = () => {
     removeToken();
     removeUser();
-    navigate('/login');
+    navigate('/');
     toast.info("You've been logged out");
   };
 

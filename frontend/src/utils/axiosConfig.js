@@ -2,6 +2,7 @@ import axios from 'axios';
 import { getToken, removeToken, removeUser } from './auth';
 
 export const setupAxiosInterceptors = () => {
+ 
   // Request Interceptor
   axios.interceptors.request.use((config) => {
     const token = getToken();

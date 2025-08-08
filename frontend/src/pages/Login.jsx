@@ -2,13 +2,16 @@ import React, { useEffect, useState } from "react";
 import { postRequest } from "../utils/apiClients";
 import { motion } from "framer-motion";
 import { ImSpinner3 } from "react-icons/im";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { getUser, setToken, setUser } from "../utils/auth";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { IoArrowBack } from "react-icons/io5";
 
 const Login = () => {
   const navigate = useNavigate();
+  
+  const location = useLocation();
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -16,7 +19,7 @@ const Login = () => {
     email: "",
     password: "",
   });
- useEffect(() => {
+  useEffect(() => {
     const user = getUser();
     if (user) {
       navigate("/"); // or /dashboard
@@ -59,7 +62,8 @@ const Login = () => {
       }
     } catch (e) {
       toast.error(
-        e.response?.data?.message || "Something went wrong. Try again."
+          e.response?.data?.message ||
+          "Something went wrong. Try again."
       );
     } finally {
       setLoading(false);
@@ -72,8 +76,15 @@ const Login = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, ease: "easeOut" }}
-        className="w-full max-w-md p-8 space-y-6 bg-white rounded-2xl shadow-xl"
+        className="w-full max-w-md relative p-8 space-y-6 bg-white rounded-2xl shadow-xl"
       >
+         <button
+                  onClick={() => navigate(location.state?.from || "/")}
+                  className="absolute top-4 left-4 text-gray-600 hover:text-teal-700 transition-colors"
+                  disabled={loading}
+                >
+                  <IoArrowBack className="text-xl" />
+                </button>
         <h1 className="text-2xl md:text-3xl lg:text-4xl text-center text-transparent bg-gradient-to-tr from-teal-300 to-teal-950 bg-clip-text uppercase font-bold">
           LOG IN
         </h1>
@@ -133,10 +144,7 @@ const Login = () => {
 
           <p className="text-left px-2 w-full">
             Don't have an account?{" "}
-            <NavLink
-              className="text-blue-900 hover:text-blue-800"
-              to="/signup"
-            >
+            <NavLink className="text-blue-900 hover:text-blue-800" to="/signup">
               Sign up
             </NavLink>
           </p>
@@ -148,11 +156,7 @@ const Login = () => {
 
 export default Login;
 
-
-
 /////////////////////////////// without toast
-
-
 
 // import React, { useState } from "react";
 // import { postRequest } from "../../utils/apiClients";

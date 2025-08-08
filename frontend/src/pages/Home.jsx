@@ -9,7 +9,7 @@ const Home = () => {
       <Hero/>
 
        <motion.h2
-    className="text-3xl md:text-4xl font-semibold text-teal-600 my-6"
+    className="text-3xl md:text-4xl font-semibold text-teal-700 my-6"
     initial={{ opacity: 0, x: -30 }}
     animate={{ opacity: 1, x: 0 }}
     transition={{ duration: 0.6, ease: "easeOut" }}

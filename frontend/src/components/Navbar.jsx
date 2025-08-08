@@ -10,16 +10,17 @@ import {
 import { FaComments } from "react-icons/fa";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { AiOutlineClose } from "react-icons/ai";
-import { IoLogOut } from "react-icons/io5";
+import { IoLogIn, IoLogOut } from "react-icons/io5";
 import { SiAnswer } from "react-icons/si";
 import { RiUser3Fill } from "react-icons/ri";
 import { NavLink, useNavigate } from "react-router-dom";
 import { getUser, removeToken, removeUser } from "../utils/auth";
 import { toast } from "react-toastify";
 import { useCurrentUser } from "../hooks/useCurrentUser";
-import { FaScrewdriverWrench } from "react-icons/fa6";
+import { FaScrewdriverWrench, FaUserPlus } from "react-icons/fa6";
 import { MdExplore } from "react-icons/md";
-
+import { FiUserPlus } from "react-icons/fi";
+import { BiSolidUserPlus } from "react-icons/bi";
 const navlinks = [
   { name: "Home", path: "/", icon: <GoHomeFill /> },
   { name: "About", path: "/about", icon: <IoMdInformationCircle /> },
@@ -155,7 +156,9 @@ const user =getUser()
                   </NavLink>
                 </li>
               }
-              <li>
+              {/* Logout button */}
+              {
+                user?   <li>
                 <button
                   onClick={handleLogout}
                   className="w-full flex cursor-pointer items-center relative p-3 rounded-lg hover:bg-teal-700 transition-colors"
@@ -172,7 +175,54 @@ const user =getUser()
                     Log out
                   </motion.span>
                 </button>
-              </li>
+              </li>:
+              // sign up sign in
+              <>
+              <li >
+                {/* login */}
+                  <NavLink
+                    to="login"
+                    className={({ isActive }) =>
+                      `flex items-center relative p-3 rounded-lg hover:bg-teal-700 transition-colors ${
+                        isActive ? "bg-teal-700" : ""
+                      }`
+                    }
+                  >
+                    <span className="text-2xl"><IoLogIn /></span>
+                    <motion.span
+                      className="absolute left-14 bg-teal-700 px-3 py-1 rounded-full whitespace-nowrap"
+                      variants={labelVariants}
+                      initial="hidden"
+                      animate={isHovered ? "visible" : "hidden"}
+                    >
+                     Log in
+                    </motion.span>
+                  </NavLink>
+                </li>
+                <li >
+                  {/* sign up */}
+                  <NavLink
+                    to="signup"
+                    className={({ isActive }) =>
+                      `flex items-center relative p-3 rounded-lg hover:bg-teal-700 transition-colors ${
+                        isActive ? "bg-teal-700" : ""
+                      }`
+                    }
+                  >
+                    <span className="text-2xl pl-1"><BiSolidUserPlus /></span>
+                    <motion.span
+                      className="absolute left-14 bg-teal-700 px-3 py-1 rounded-full whitespace-nowrap"
+                      variants={labelVariants}
+                      initial="hidden"
+                      animate={isHovered ? "visible" : "hidden"}
+                    >
+                     Sign up
+                    </motion.span>
+                  </NavLink>
+                </li>
+              </>
+              }
+             
             </ul>
           </nav>
         </div>
@@ -229,7 +279,8 @@ const user =getUser()
                         </NavLink>
                       </li>
                  }
-                    <li>
+                    { //logout
+                      user ? <li>
                       <button
                         onClick={handleLogout}
                         className="flex items-center cursor-pointer p-3 rounded-lg hover:bg-teal-700 transition-colors w-full"
@@ -239,7 +290,38 @@ const user =getUser()
                         </span>
                         <span className="ml-3">Logout</span>
                       </button>
-                    </li>
+                    </li>:<>
+                    {/* login */}
+                     <li >
+                        <NavLink
+                          to="/login"
+                          className={({ isActive }) =>
+                            `flex items-center p-3 rounded-lg hover:bg-teal-700 transition-colors ${
+                              isActive ? "bg-teal-700" : ""
+                            }`
+                          }
+                          onClick={() => setMobileOpen(false)}
+                        >
+                          <span className="text-2xl"><IoLogIn /></span>
+                          <span className="ml-3">Log In</span>
+                        </NavLink>
+                      </li>
+                       <li >
+                        <NavLink
+                          to="/signup"
+                          className={({ isActive }) =>
+                            `flex items-center p-3 rounded-lg hover:bg-teal-700 transition-colors ${
+                              isActive ? "bg-teal-700" : ""
+                            }`
+                          }
+                          onClick={() => setMobileOpen(false)}
+                        >
+                          <span className="text-2xl pl-1"><FaUserPlus /></span>
+                          <span className="ml-3">Sign Up</span>
+                        </NavLink>
+                      </li>
+                      </>
+                    }
                   </ul>
                 </nav>
               </div>

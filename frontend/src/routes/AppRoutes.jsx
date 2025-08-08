@@ -13,6 +13,7 @@ import EditProfile from "../pages/EditProfile";
 import ResetPassword from "../pages/ResetPassword";
 import NotFound from "../components/NotFound";
 import ExploreStyles from "../pages/ExploreStyles";
+import NotificationPage from "../pages/Notifications";
 
 const router = createBrowserRouter([
   {
@@ -30,6 +31,9 @@ const router = createBrowserRouter([
       {
         path: "about",
         element: <About />,
+      }, {
+        path: "notifications",
+        element: <NotificationPage />,
       },
        {
         path: "hijab-styles",
