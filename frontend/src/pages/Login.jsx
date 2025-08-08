@@ -80,7 +80,7 @@ const Login = () => {
       >
          <button
                   onClick={() => navigate(location.state?.from || "/")}
-                  className="absolute top-4 left-4 text-gray-600 hover:text-teal-700 transition-colors"
+                  className="absolute top-4 left-4 text-gray-600 hover:text-teal-700 cursor-pointer transition-colors"
                   disabled={loading}
                 >
                   <IoArrowBack className="text-xl" />

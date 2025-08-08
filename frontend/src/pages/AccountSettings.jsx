@@ -31,7 +31,7 @@ const AccountSettings = () => {
     setLoading(true);
     try {
       const response = await deleteRequest(
-        `${import.meta.env.VITE_BACKEND_URL}/users/${user._id}`
+        `${import.meta.env.VITE_BACKEND_URL}/users/${user.user._id}`
       );
 
       if (response.success) {

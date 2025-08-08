@@ -105,7 +105,7 @@ const EditProfile = () => {
         {/* Back button */}
         <button
           onClick={() => navigate(location.state?.from || "/dashboard")}
-          className="absolute top-4 left-4 text-gray-600 hover:text-teal-700 transition-colors"
+          className="absolute top-4 left-4 text-gray-600 hover:text-teal-700 cursor-pointer transition-colors"
           disabled={isLoading}
         >
           <IoArrowBack className="text-xl" />

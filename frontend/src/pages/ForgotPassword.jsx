@@ -4,11 +4,14 @@ import { postRequest } from "../utils/apiClients";
 import { ImSpinner3 } from "react-icons/im";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useLocation, useNavigate } from "react-router-dom";
+import { IoArrowBack } from "react-icons/io5";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
-
+const navigate =useNavigate()
+const location = useLocation()
   const handleForgotPswd = async (e) => {
     e.preventDefault();
 
@@ -35,8 +38,15 @@ const ForgotPassword = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, ease: "easeOut" }}
-        className="w-full max-w-md p-8 space-y-6 bg-white rounded-2xl shadow-xl"
+        className="w-full max-w-md p-8 space-y-6 relative bg-white rounded-2xl shadow-xl"
       >
+          <button
+                          onClick={() => navigate(location.state?.from || "/login")}
+                          className="absolute top-4 left-4 text-gray-600 hover:text-teal-700 cursor-pointer transition-colors"
+                          disabled={loading}
+                        >
+                          <IoArrowBack className="text-xl" />
+                        </button>
         <h1 className="text-2xl md:text-3xl lg:text-4xl text-center text-transparent bg-gradient-to-tr from-teal-300 to-teal-950 bg-clip-text uppercase font-bold">
           Forgot Password
         </h1>
