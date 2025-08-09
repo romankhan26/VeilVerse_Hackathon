@@ -117,8 +117,8 @@ const AllHijabs = (e) => {
         }`,
         { description: reviewText, rating }
       );
-      console.log(response, "updating review");
-      console.log(hijabs, "HIjabs");
+      // console.log(response, "updating review");
+      // console.log(hijabs, "HIjabs");
 
       if (response.success) {
         // Update review in local state by replacing matching review

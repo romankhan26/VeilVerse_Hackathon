@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useCurrentUser } from "../hooks/useCurrentUser"; // Assuming you have this hook
 import { removeToken, removeUser } from "../utils/auth";
-
+import {toast} from "react-toastify"
 const Dashboard = () => {
   const navigate = useNavigate();
   let { user , refetchUser,error } = useCurrentUser();

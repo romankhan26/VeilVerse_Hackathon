@@ -120,21 +120,21 @@ const AccountSettings = () => {
           className="flex-1"
         >
           {activeTab === 'password' && (
-            <div className="bg-white rounded-lg shadow-sm p-6">
+        
               <UpdatePassword />
-            </div>
+           
           )}
 
-          {activeTab === 'danger' && (
-            <div className="bg-white rounded-lg shadow-sm p-6">
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                className="w-full p-6 space-y-6"
-              >
-                <h2 className="text-2xl text-center text-transparent bg-gradient-to-tr from-red-400 to-red-800 bg-clip-text uppercase font-bold">
+          {activeTab === 'danger' && ( <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, ease: "easeOut" }}
+                  className="w-full max-w-md p-8 space-y-6 bg-white rounded-2xl shadow-xl mx-auto"
+                >
+                  <h1 className="text-2xl md:text-3xl lg:text-4xl text-center text-transparent bg-gradient-to-tr
+                    from-red-400 to-red-800 bg-clip-text uppercase font-bold">
                   DELETE ACCOUNT
-                </h2>
+                </h1>
 
                 <div className="space-y-4">
                   <p className="text-gray-600 text-center">
@@ -178,7 +178,7 @@ const AccountSettings = () => {
                   </button>
                 </div>
               </motion.div>
-            </div>
+          
           )}
         </motion.div>
       </div>

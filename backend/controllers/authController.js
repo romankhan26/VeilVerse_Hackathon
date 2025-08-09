@@ -8,7 +8,7 @@ export const signupHandler = async (req, res) => {
   try {
     // 1. Validate request
     const { error } = signupValidation(req.body);
-    if (error)
+    if (error || req.body.password.length < 6)
       return res.status(400).json({ message: error.details[0].message });
 
     // 2. Check if user already exists
@@ -17,9 +17,8 @@ export const signupHandler = async (req, res) => {
       return res.status(400).json({ message: "User already exists" });
 
     // 3. Create user (no need to hash manually here!)
-    const user = User.create(req.body);
+    const user =await User.create(req.body);
     const token = signInToken(user);
-
     res.status(201).json({
       user,
       token,

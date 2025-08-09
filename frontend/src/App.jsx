@@ -21,8 +21,6 @@ function App() {
         theme="light" // or "dark"
       />
        <RouterProvider router={router} fallbackElement={<LoadingOverlay/>}/>
-{/* <Login/> */}
-<h1>Hello World</h1>
     </>
   )
 }

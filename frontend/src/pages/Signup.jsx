@@ -16,6 +16,8 @@ const SignUp = () => {
   const [loading, setLoading] = useState(false);
   const [showPassword1, setShowPassword1] = useState(false);
   const [showPassword2, setShowPassword2] = useState(false);
+  const [error, setError]= useState("")
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -40,8 +42,10 @@ const SignUp = () => {
     const value = e.target.value;
     setConfirmPassword(value);
 
-    if (formData.password !== value) {
-      toast.error("Passwords do not match.");
+      if (formData.password !== value) {
+      setError("Passwords do not match.");
+    } else {
+      setError("")
     }
   };
 
@@ -63,7 +67,7 @@ const SignUp = () => {
       if (data.success) {
         setToken(data.token);
         setUser(data.user);
-
+// console.log(data)
         toast.success("Signup successful!");
 
         // Reset form
@@ -82,7 +86,8 @@ const SignUp = () => {
         toast.error(data.message || "Signup failed.");
       }
     } catch (e) {
-      toast.error(e.message || "Something went wrong.");
+      toast.error(e.response.data.message||e.message || "Something went wrong.");
+      // console.log(e)
     } finally {
       setLoading(false);
     }
@@ -140,6 +145,7 @@ const SignUp = () => {
               name="password"
               value={formData.password}
               onChange={handleChange}
+              minLength={8}
               type={showPassword1 ? "text" : "password"}
               className="w-full px-4 py-2 border-none bg-gray-400/20 rounded-lg focus:outline-none focus:shadow-teal-700/80 shadow-xs"
               placeholder="Password"
@@ -178,7 +184,7 @@ const SignUp = () => {
               )}
             </button>
           </div>
-
+{error && <p className="text-red-500 text-sm">{error}</p>}
           <button
             type="submit"
             className="w-full px-4 py-2 cursor-pointer text-white bg-gradient-to-br from-teal-300 to-teal-950 hover:from-teal-250 hover:to-teal-900 rounded-md flex justify-center items-center transition-transform transform hover:scale-105"

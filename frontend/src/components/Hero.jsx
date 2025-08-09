@@ -22,7 +22,7 @@ const Hero = () => {
    <p className="p-0.5 rounded-md bg-gradient-to-r from-teal-600 to-teal-800 inline-block">
   <NavLink
     to="/hijab-styles"
-    className="block rounded-md border-transparent bg-white px-6 py-3 font-semibold transition
+    className="block rounded-md border-transparent bg-gray-100 px-6 py-3 font-semibold transition
       hover:border-transparent text-black
       hover:bg-gradient-to-r hover:from-teal-600 hover:to-teal-800
       hover:text-white"
@@ -43,17 +43,20 @@ const Hero = () => {
   transition={{ duration: 1 }}
 >
   <img
-    src="hero_main.webp" // replace with your image path
+    src="hero_main.png" // replace with your image path
     alt="Elegant hijab style"
     className="rounded-lg  object-cover w-full h-auto"
+     style={{
+      filter: "drop-shadow(0 -10px 15px rgba(0,0,0,0.3))"
+    }}
   />
 
   {/* Bottom smudge / fade effect */}
   <div
-    className="absolute bottom-0 left-0 w-full h-20 rounded-b-lg pointer-events-none"
+    className="absolute -bottom-4 left-0 w-full h-24 rounded-b-lg pointer-events-none"
     style={{
       background:
-        "linear-gradient(to top, white, transparent)",
+        "linear-gradient(to top, #f3f4f6, transparent)",
       zIndex: 10,
     }}
   />

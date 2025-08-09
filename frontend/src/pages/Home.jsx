@@ -7,6 +7,7 @@ const Home = () => {
   return (
     <div>
       <Hero/>
+<div className=''>
 
        <motion.h2
     className="text-3xl md:text-4xl font-semibold text-teal-700 my-6"
@@ -17,6 +18,7 @@ const Home = () => {
     Featured Hijab Styles to Inspire Your Look
   </motion.h2>
       <AllHijabs/></div>
+    </div>
   )
 }
 

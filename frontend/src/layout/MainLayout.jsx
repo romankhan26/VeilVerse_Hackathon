@@ -10,7 +10,7 @@ const MainLayout = () => {
       <Navbar />
       
       {/* Main content area */}
-      <main className="md:ml-20 min-h-screen transition-all duration-300">
+      <main className="md:ml-20 min-h-screen transition-all duration-300 bg-gray-100">
         <div className="w-full mx-auto max-w-[1024px] px-4 py-4 md:py-6">
           <Outlet />
         </div>
